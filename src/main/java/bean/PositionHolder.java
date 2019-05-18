@@ -11,12 +11,12 @@ import tree.Nod;
 public class PositionHolder {
 
     private int index =0;
-    private String key="";
+    private String text ="";
     private Nod nod = new Nod();
 
-    public PositionHolder(int index, String key) {
+    public PositionHolder(int index, String text) {
         this.index = index;
-        this.key = key;
+        this.text = text;
     }
 
     public PositionHolder(int index, Nod nod) {
