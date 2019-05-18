@@ -9,17 +9,70 @@ import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+//@Data
 public class Nod {
     private String name = "";
     private String value = "";
     private boolean isArray=false;
     private List<Nod> nodList = new ArrayList<>();
     private Nod parent;
-    
+
+
     public Nod(String name, String value, Nod parent) {
         this.name = name;
         this.value = value;
+        this.parent = parent;
+    }
+
+    public String getNameString(int index) {
+        if (this.getName() != null && !this.getName().isEmpty()) {
+            if (this.isArray()) {
+                return getName() + "[" + index + "].";
+            } else {
+                return getName() + ".";
+            }
+        }
+        return "";
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    public boolean isArray() {
+        return isArray;
+    }
+
+    public void setArray(boolean array) {
+        isArray = array;
+    }
+
+
+    public List<Nod> getNodList() {
+        return nodList;
+    }
+
+    public void setNodList(List<Nod> nodList) {
+        this.nodList = nodList;
+    }
+
+    public Nod getParent() {
+        return parent;
+    }
+
+    public void setParent(Nod parent) {
         this.parent = parent;
     }
 }
