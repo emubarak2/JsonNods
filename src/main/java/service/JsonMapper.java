@@ -1,8 +1,6 @@
 package service;
 
 import bean.PositionHolder;
-
-import lombok.extern.java.Log;
 import tree.Nod;
 import utility.FileUtility;
 
@@ -10,22 +8,25 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-@Log
 public class JsonMapper {
-    private static Nod nod = new Nod("", "", null);
-    private static Map<String, String> map = new HashMap<>();
+    private Nod nod = new Nod("", "", null);
+    private Map<String, String> map = new HashMap<>();
+    private String jsonString;
+
 
     public static void main(String[] args) {
 
-        JsonMapper mapper = new JsonMapper();
-        String jsonString = FileUtility.convertStreamToString("sample.json");
-        mapper.buildTree(0, jsonString, nod);
-        mapper.fillMap(nod, "","type");
-        System.out.println(map);
+        JsonMapper mapper = new JsonMapper("sample.json");
+        Map<String, String> typeAttributesPaths = mapper.convertJsonToMap("type");
+        System.out.println(typeAttributesPaths);
     }
 
 
-    public void fillMap(Nod nod, String parentString, String attribute) {
+    public JsonMapper(String path) {
+        jsonString = FileUtility.convertStreamToString(path);
+    }
+
+    private void fillMap(Nod nod, String parentString, String attribute) {
         if (nod == null)
             return;
 
@@ -42,7 +43,7 @@ public class JsonMapper {
         }
     }
 
-    public PositionHolder buildTree(int k, String s, Nod nod) {
+    private PositionHolder buildTree(int k, String s, Nod nod) {
 
         for (int i = k; i < s.length(); i++) {
             char c = s.charAt(i);
@@ -81,7 +82,7 @@ public class JsonMapper {
         return null;
     }
 
-    public PositionHolder getValue(int k, String s, Nod nod) {
+    private PositionHolder getValue(int k, String s, Nod nod) {
 
         StringBuilder sb = new StringBuilder();
         for (int i = k; i < s.length(); i++) {
@@ -105,7 +106,7 @@ public class JsonMapper {
     }
 
 
-    public PositionHolder getKey(int k, String s, Nod nod) {
+    private PositionHolder getKey(int k, String s, Nod nod) {
 
         boolean f = false;
         StringBuilder sb = new StringBuilder();
@@ -132,4 +133,10 @@ public class JsonMapper {
         return null;
     }
 
+    public Map<String, String> convertJsonToMap(String attribute) {
+        map.clear();
+        buildTree(0, jsonString, nod);
+        fillMap(nod, "", attribute);
+        return map;
+    }
 }

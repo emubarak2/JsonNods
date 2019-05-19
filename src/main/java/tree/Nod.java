@@ -1,22 +1,23 @@
 package tree;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
-//@Data
+@Getter
+@Setter
 public class Nod {
     private String name = "";
     private String value = "";
-    private boolean isArray=false;
+    private boolean isArray = false;
     private List<Nod> nodList = new ArrayList<>();
     private Nod parent;
-
 
     public Nod(String name, String value, Nod parent) {
         this.name = name;
@@ -25,54 +26,14 @@ public class Nod {
     }
 
     public String getNameString(int index) {
-        if (this.getName() != null && !this.getName().isEmpty()) {
-            if (this.isArray()) {
-                return getName() + "[" + index + "].";
-            } else {
-                return getName() + ".";
-            }
+        if (this.getName() == null || this.getName().isEmpty()) {
+            return "";
         }
-        return "";
-    }
+        if (this.isArray()) {
+            return getName() + "[" + index + "].";
+        } else {
+            return getName() + ".";
+        }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
-    }
-
-    public boolean isArray() {
-        return isArray;
-    }
-
-    public void setArray(boolean array) {
-        isArray = array;
-    }
-
-
-    public List<Nod> getNodList() {
-        return nodList;
-    }
-
-    public void setNodList(List<Nod> nodList) {
-        this.nodList = nodList;
-    }
-
-    public Nod getParent() {
-        return parent;
-    }
-
-    public void setParent(Nod parent) {
-        this.parent = parent;
     }
 }
